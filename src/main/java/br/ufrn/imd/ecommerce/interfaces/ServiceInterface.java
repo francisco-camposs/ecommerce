@@ -10,7 +10,6 @@ public interface ServiceInterface <
         E extends AbstractEntity,
         R extends JpaRepository<E, Long> > {
 
-
     R getRepository();
 
 
@@ -43,7 +42,7 @@ public interface ServiceInterface <
         return this.getRepository().findById(id).orElseThrow(() -> new IllegalStateException("This id not exists"));
     }
 
-    default List<E> findAll(Long id){
+    default List<E> findAll(){
         return this.getRepository().findAll();
     }
 
