@@ -51,4 +51,7 @@ public abstract class AbstractEntity {
         this.editedAt = LocalDateTime.now();
     }
 
+    public abstract Long getId();
+
+    public abstract Long setId();
 }
