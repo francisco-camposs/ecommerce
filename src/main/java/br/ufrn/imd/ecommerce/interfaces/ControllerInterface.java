@@ -1,6 +1,7 @@
 package br.ufrn.imd.ecommerce.interfaces;
 
 import br.ufrn.imd.ecommerce.abstracts.AbstractEntity;
+import br.ufrn.imd.ecommerce.services.AppUserService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,8 @@ public interface ControllerInterface <
 
     S getService();
 
-    @GetMapping
-    default E get(@RequestParam Long id){
-        return this.getService().findById(id);
+    @GetMapping("/{id}")
+    default E get(@PathVariable Long id){ return this.getService().findById(id);
     }
 
     @GetMapping
