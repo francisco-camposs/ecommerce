@@ -18,6 +18,9 @@ public interface ControllerInterface <
     default E get(@PathVariable Long id){ return this.getService().findById(id);
     }
 
+    @GetMapping("page/{id}")
+    default List<E> getPagedContent(@PathVariable Long id){ return this.getService().findPagedContent(id); };
+
     @GetMapping
     default List<E> get(){
         return this.getService().findAll();

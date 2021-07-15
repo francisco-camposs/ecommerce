@@ -3,6 +3,9 @@ package br.ufrn.imd.ecommerce.interfaces;
 import br.ufrn.imd.ecommerce.abstracts.AbstractEntity;
 import br.ufrn.imd.ecommerce.models.AppUser;
 import br.ufrn.imd.ecommerce.services.AppUserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -61,6 +64,13 @@ public interface ServiceInterface <
 
     default List<E> findAll(){
         return this.getRepository().findAll();
+    }
+
+    default List<E> findPagedContent(Long id){
+        Pageable firstPageWithTenElements = PageRequest.of(Math.toIntExact(id), 5);
+        Page<E> allContent = getRepository().findAll(firstPageWithTenElements);
+        List<E> listOfContent = allContent.getContent();
+        return listOfContent;
     }
 
 
