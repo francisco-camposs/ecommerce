@@ -34,9 +34,20 @@ public class Product extends AbstractEntity {
     @Override
     public void setId() {
     }
+    @Column(nullable = false)
     private String name;
-//    private String imgLink;
-//    private String description;
-//    private double price;
+
+    @Column(nullable = false)
+    private String imgLink;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private double price;
+
+//    @ManyToOne
+//    @JoinColumn(nullable = false, name = AppUser.ID_COLUMN_NAME)
+//    private AppUser appUser;
 
 }
