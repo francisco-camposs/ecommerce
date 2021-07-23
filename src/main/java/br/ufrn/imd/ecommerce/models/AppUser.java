@@ -49,14 +49,17 @@ public class AppUser implements UserDetails {
     @Column(nullable = false, unique = true, updatable = false)
     private String email;
 
+    @Getter
     @Column(nullable = false, length = 128, unique = true, updatable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private UserRole appUserRole;
 
+    @Builder.Default
     private Boolean locked = false;
 
+    @Builder.Default
     private Boolean enabled = false;
 
     public AppUser(String firstName, String lastName, String email, String password) {
