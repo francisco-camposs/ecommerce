@@ -14,9 +14,14 @@ public class RegistrationController {
     @Autowired
     private final RegistrationService registrationService;
 
-    @PostMapping
-    public String register(@RequestBody RegistrationRequest request){
-        return registrationService.register(request);
+    @PostMapping(value = "register-costumer")
+    public String registerCostumer(@RequestBody RegistrationRequest request){
+        return registrationService.registerCostumer(request);
+    }
+
+    @PostMapping(value = "register-vendor")
+    public String registerVendor(@RequestBody RegistrationRequest request){
+        return registrationService.registerVendor(request);
     }
 
     @GetMapping

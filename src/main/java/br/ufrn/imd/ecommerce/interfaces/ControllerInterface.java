@@ -1,7 +1,6 @@
 package br.ufrn.imd.ecommerce.interfaces;
 
 import br.ufrn.imd.ecommerce.abstracts.AbstractEntity;
-import br.ufrn.imd.ecommerce.services.AppUserService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.*;
 

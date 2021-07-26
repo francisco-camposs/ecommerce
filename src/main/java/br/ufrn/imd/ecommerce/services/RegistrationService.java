@@ -1,6 +1,7 @@
 package br.ufrn.imd.ecommerce.services;
 
 import br.ufrn.imd.ecommerce.dtos.RegistrationRequest;
+import br.ufrn.imd.ecommerce.enums.UserRole;
 import br.ufrn.imd.ecommerce.models.AppUser;
 import br.ufrn.imd.ecommerce.models.ConfirmationToken;
 import br.ufrn.imd.ecommerce.validators.EmailValidator;
@@ -18,20 +19,6 @@ public class RegistrationService {
     private final AppUserService appUserService;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
-
-
-    public String register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.test(request.getEmail());
-
-        if (!isValidEmail)
-            throw new IllegalStateException("Email not valid");
-
-        return appUserService.signUpUser(new AppUser(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getEmail(),
-                request.getPassword()));
-    }
 
     @Transactional
     public void confirmToken(String token) {
@@ -51,4 +38,39 @@ public class RegistrationService {
         confirmationTokenService.setConfirmedAt(confirmationToken);
         appUserService.enableAppUser(confirmationToken.getAppUser().getEmail());
     }
+
+    public String registerCostumer(RegistrationRequest request) {
+        boolean isValidEmail = emailValidator.test(request.getEmail());
+
+        if (!isValidEmail)
+            throw new IllegalStateException("Email not valid");
+
+        AppUser appUser = AppUser.builder()
+                                    .appUserRole(UserRole.COSTUMER)
+                                    .firstName(request.getFirstName())
+                                    .lastName(request.getLastName())
+                                    .email(request.getEmail())
+                                    .password(request.getPassword())
+                                    .build();
+
+        return appUserService.signUpUser(appUser);
+    }
+
+    public String registerVendor(RegistrationRequest request) {
+        boolean isValidEmail = emailValidator.test(request.getEmail());
+
+        if (!isValidEmail)
+            throw new IllegalStateException("Email not valid");
+
+        AppUser appUser = AppUser.builder()
+                                    .appUserRole(UserRole.VENDOR)
+                                    .firstName(request.getFirstName())
+                                    .lastName(request.getLastName())
+                                    .email(request.getEmail())
+                                    .password(request.getPassword())
+                                    .build();
+
+        return appUserService.signUpUser(appUser);
+    }
+
 }
