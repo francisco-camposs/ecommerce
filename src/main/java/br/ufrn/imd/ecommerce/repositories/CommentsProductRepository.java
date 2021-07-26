@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ComentsProductRepository extends JpaRepository<ComentsProduct, Long> {
+public interface CommentsProductRepository extends JpaRepository<ComentsProduct, Long> {
 
     @Query("select c from ComentsProduct c where c.product.id = ?1" )
     List<ComentsProduct> getComentsByProductId(Long productId);

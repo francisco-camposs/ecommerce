@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ComentsProductService implements ServiceInterface<ComentsProduct, ComentsProductRepository> {
+public class CommentsProductService implements ServiceInterface<ComentsProduct, ComentsProductRepository> {
 
     @Getter
     private final ComentsProductRepository repository;
