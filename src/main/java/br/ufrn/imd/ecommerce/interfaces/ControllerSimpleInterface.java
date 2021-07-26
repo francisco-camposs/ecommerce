@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public interface ControllerInterface <
+public interface ControllerSimpleInterface <
         E extends AbstractEntity,
         R extends JpaRepository<E, Long>,
         S extends ServiceInterface<E, R>>{

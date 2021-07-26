@@ -11,9 +11,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = ComentsProduct.SNAKE_NAME)
+@Table(name = CommentsProduct.SNAKE_NAME)
 @EqualsAndHashCode(callSuper = false)
-public class ComentsProduct extends AbstractEntity {
+public class CommentsProduct extends AbstractEntity {
 
     public static final String SNAKE_NAME = "coments_product";
     public static final String CAMEL_NAME = "comentsProduct";
@@ -24,15 +24,15 @@ public class ComentsProduct extends AbstractEntity {
 
     @Id
     @SequenceGenerator(
-            name = ComentsProduct.GENERATOR_NAME,
-            sequenceName = ComentsProduct.GENERATOR_NAME,
+            name = CommentsProduct.GENERATOR_NAME,
+            sequenceName = CommentsProduct.GENERATOR_NAME,
             allocationSize = 1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = ComentsProduct.GENERATOR_NAME
+            generator = CommentsProduct.GENERATOR_NAME
     )
 
-    @Column(name = ComentsProduct.ID_COLUMN_NAME, nullable = false, updatable = false)
+    @Column(name = CommentsProduct.ID_COLUMN_NAME, nullable = false, updatable = false)
     @Getter
     private Long id;
 
