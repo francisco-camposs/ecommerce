@@ -1,6 +1,5 @@
 package br.ufrn.imd.ecommerce.controllers;
 
-import br.ufrn.imd.ecommerce.interfaces.ControllerSimpleInterface;
 import br.ufrn.imd.ecommerce.interfaces.ControllerWriteProtectedInterface;
 import br.ufrn.imd.ecommerce.models.Product;
 import br.ufrn.imd.ecommerce.repositories.ProductRepository;

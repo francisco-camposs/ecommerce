@@ -1,6 +1,7 @@
 package br.ufrn.imd.ecommerce.models;
 
 import br.ufrn.imd.ecommerce.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,16 +13,16 @@ import java.util.Collections;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
 @Builder
+@EqualsAndHashCode()
 @Entity
-@Table(name = AppUser.SNAKE_NAME)
+@Table(name = VendorUser.SNAKE_NAME)
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppUser implements UserDetails {
+public class VendorUser implements UserDetails {
 
-    public static final String SNAKE_NAME = "app_user";
-    public static final String CAMEL_NAME = "appUser";
+    public static final String SNAKE_NAME = "vendor_user";
+    public static final String CAMEL_NAME = "vendorUser";
 
     public static final String GENERATOR_NAME = SNAKE_NAME + "_sequence";
     public static final String ID_COLUMN_NAME = SNAKE_NAME + "_id";
@@ -29,50 +30,58 @@ public class AppUser implements UserDetails {
 
     @Id
     @SequenceGenerator(
-        name = AppUser.GENERATOR_NAME,
-        sequenceName = AppUser.GENERATOR_NAME,
-        allocationSize = 1
+            name = VendorUser.GENERATOR_NAME,
+            sequenceName = VendorUser.GENERATOR_NAME,
+            allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = AppUser.GENERATOR_NAME
+            generator = VendorUser.GENERATOR_NAME
     )
-    @Column(name = AppUser.ID_COLUMN_NAME, nullable = false, updatable = false)
+    @Column(name = VendorUser.ID_COLUMN_NAME, nullable = false, updatable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
+    @Column(length = 256)
+    private String name;
 
     @Column(nullable = false, unique = true, updatable = false)
     private String email;
 
-    @Getter
     @Column(nullable = false, length = 128, unique = true, updatable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserRole appUserRole;
+    private UserRole userRole;
 
     @Builder.Default
     private Boolean locked = false;
 
     @Builder.Default
-    private Boolean enabled = false;
+    private Boolean enabled = true;
 
-    public AppUser(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.appUserRole = UserRole.COSTUMER;
-    }
+    @Column(nullable = false)
+    private String imgLink;
+
+    @Column(nullable = false, length = 14)
+    private String cnpj;
+
+    @Column
+    private Long postalCode;
+
+    @Column(length = 512)
+    private String street;
+
+    @Column
+    private Long number;
+
+    @Column(length = 512)
+    private String complement;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
         return Collections.singletonList(authority);
     }
 
@@ -83,7 +92,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
@@ -93,11 +102,12 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
         return enabled;
     }
+
 }

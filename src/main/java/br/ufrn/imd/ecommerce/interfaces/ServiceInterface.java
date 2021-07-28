@@ -1,7 +1,7 @@
 package br.ufrn.imd.ecommerce.interfaces;
 
 import br.ufrn.imd.ecommerce.abstracts.AbstractEntity;
-import br.ufrn.imd.ecommerce.models.AppUser;
+import br.ufrn.imd.ecommerce.models.CostumerUser;
 import br.ufrn.imd.ecommerce.services.AppUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +28,7 @@ public interface ServiceInterface <
         this.prePost(entity);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        AppUser user = (AppUser) getAppUserService().loadUserByUsername(currentPrincipalName);
+        CostumerUser user = (CostumerUser) getAppUserService().loadUserByUsername(currentPrincipalName);
         entity.setCreatedBy(user);
         entity.setCreatedAt(LocalDateTime.now());
         entity = this.getRepository().save(entity);
@@ -43,7 +43,7 @@ public interface ServiceInterface <
         this.prePut(entity);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        AppUser user = (AppUser) getAppUserService().loadUserByUsername(currentPrincipalName);
+        CostumerUser user = (CostumerUser) getAppUserService().loadUserByUsername(currentPrincipalName);
         entity.setEditedBy(user);
         entity.setEditedAt(LocalDateTime.now());
         entity = this.getRepository().save(entity);
@@ -51,11 +51,12 @@ public interface ServiceInterface <
         return entity;
     }
 
-    void posPost(E entity);
     void prePost(E entity);
+    void posPost(E entity);
 
-    void posPut(E entity);
     void prePut(E entity);
+    void posPut(E entity);
+
 
 
     default E findById(Long id){
@@ -69,8 +70,7 @@ public interface ServiceInterface <
     default List<E> findPagedContent(Long id){
         Pageable firstPageWithTenElements = PageRequest.of(Math.toIntExact(id), 5);
         Page<E> allContent = getRepository().findAll(firstPageWithTenElements);
-        List<E> listOfContent = allContent.getContent();
-        return listOfContent;
+        return allContent.getContent();
     }
 
 

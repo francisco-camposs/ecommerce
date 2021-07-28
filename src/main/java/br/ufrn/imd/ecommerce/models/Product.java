@@ -31,9 +31,6 @@ public class Product extends AbstractEntity {
     @Column(name = Product.ID_COLUMN_NAME, nullable = false, updatable = false)
     private Long id;
 
-    @Override
-    public void setId() {
-    }
     @Column(nullable = false)
     private String name;
 
@@ -46,8 +43,7 @@ public class Product extends AbstractEntity {
     @Column(nullable = false)
     private double price;
 
-//    @ManyToOne
-//    @JoinColumn(nullable = false, name = AppUser.ID_COLUMN_NAME)
-//    private AppUser appUser;
+    @Column(nullable = false)
+    private Boolean available;
 
 }

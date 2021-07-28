@@ -1,6 +1,7 @@
 package br.ufrn.imd.ecommerce.controllers;
 
-import br.ufrn.imd.ecommerce.dtos.RegistrationRequest;
+import br.ufrn.imd.ecommerce.dtos.RegistrationClientRequest;
+import br.ufrn.imd.ecommerce.dtos.RegistrationVendorRequest;
 import br.ufrn.imd.ecommerce.services.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,12 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @PostMapping(value = "register-costumer")
-    public String registerCostumer(@RequestBody RegistrationRequest request){
+    public String registerCostumer(@RequestBody RegistrationClientRequest request){
         return registrationService.registerCostumer(request);
     }
 
     @PostMapping(value = "register-vendor")
-    public String registerVendor(@RequestBody RegistrationRequest request){
+    public String registerVendor(@RequestBody RegistrationVendorRequest request){
         return registrationService.registerVendor(request);
     }
 

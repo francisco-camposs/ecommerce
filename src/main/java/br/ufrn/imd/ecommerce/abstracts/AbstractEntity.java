@@ -1,6 +1,6 @@
 package br.ufrn.imd.ecommerce.abstracts;
 
-import br.ufrn.imd.ecommerce.models.AppUser;
+import br.ufrn.imd.ecommerce.models.CostumerUser;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public abstract class AbstractEntity {
 
     @Column(nullable = false)
@@ -30,13 +30,12 @@ public abstract class AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "created_by", updatable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    protected AppUser createdBy;
+    protected CostumerUser createdBy;
 
     @ManyToOne
     @JoinColumn(name = "edited_by")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    protected AppUser editedBy;
-
+    protected CostumerUser editedBy;
 
     @PrePersist
     public void prePersist(){
@@ -50,5 +49,4 @@ public abstract class AbstractEntity {
 
     public abstract Long getId();
 
-    public abstract void setId();
 }

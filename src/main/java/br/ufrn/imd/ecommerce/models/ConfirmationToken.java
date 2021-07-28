@@ -46,16 +46,16 @@ public class ConfirmationToken {
     private LocalDateTime confirmedAt;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = AppUser.ID_COLUMN_NAME)
-    private AppUser appUser;
+    @JoinColumn(nullable = false, name = CostumerUser.ID_COLUMN_NAME)
+    private CostumerUser costumerUser;
 
     public ConfirmationToken(String token,
                              LocalDateTime createdAt,
                              LocalDateTime expiresAt,
-                             AppUser appUser) {
+                             CostumerUser costumerUser) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.appUser = appUser;
+        this.costumerUser = costumerUser;
     }
 }

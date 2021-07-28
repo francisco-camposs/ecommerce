@@ -17,8 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/products/comments")
 @AllArgsConstructor
-public class CommentsProductControllerSimple implements ControllerSimpleInterface<CommentsProduct, CommentsProductRepository
-        , CommentsProductService> {
+public class CommentsProductControllerSimple implements
+        ControllerSimpleInterface<CommentsProduct, CommentsProductRepository, CommentsProductService> {
 
     @Getter
     private final CommentsProductService service;
@@ -27,4 +27,5 @@ public class CommentsProductControllerSimple implements ControllerSimpleInterfac
     List<CommentsProduct> getCommentsByProduct(@PathVariable Long productId){
         return this.getService().getRepository().getCommentsByProductId(productId);
     }
+
 }

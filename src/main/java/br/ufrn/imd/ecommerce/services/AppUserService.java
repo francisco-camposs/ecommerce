@@ -1,8 +1,8 @@
 package br.ufrn.imd.ecommerce.services;
 
-import br.ufrn.imd.ecommerce.models.AppUser;
+import br.ufrn.imd.ecommerce.models.CostumerUser;
 import br.ufrn.imd.ecommerce.models.ConfirmationToken;
-import br.ufrn.imd.ecommerce.repositories.AppUserRepository;
+import br.ufrn.imd.ecommerce.repositories.CostumerUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,13 +20,13 @@ public class AppUserService implements UserDetailsService {
 
     private final String USER_NOT_FOUND_MSG = "User with email %s not found";
 
-    private final AppUserRepository appUserRepository;
+    private final CostumerUserRepository costumerUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email)
+        return costumerUserRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email))
                 );
@@ -34,35 +34,33 @@ public class AppUserService implements UserDetailsService {
 
 
     @Transactional
-    public String signUpUser(AppUser appUser) {
+    public String signUpUser(CostumerUser costumerUser) {
 
-        boolean userExists = appUserRepository.findByEmail(appUser.getEmail()).isPresent();
+        boolean userExists = costumerUserRepository.findByEmail(costumerUser.getEmail()).isPresent();
 
         if (userExists)
             throw new IllegalStateException("Email already taken");
 
-        String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
-        appUser.setPassword(encodedPassword);
-        appUser.setEnabled(true);
-        appUserRepository.save(appUser);
+        String encodedPassword = bCryptPasswordEncoder.encode(costumerUser.getPassword());
+        costumerUser.setPassword(encodedPassword);
+        costumerUser.setEnabled(true);
+        costumerUserRepository.save(costumerUser);
 
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15),
-                appUser
+                costumerUser
         );
 
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         return token;
-
-//        TODO: Send email
     }
 
     public void enableAppUser(String email) {
-        AppUser appUser = appUserRepository.findByEmail(email).orElseThrow(() -> new IllegalStateException("Email don't exist"));
-        appUser.setEnabled(true);
-        appUserRepository.save(appUser);
+        CostumerUser costumerUser = costumerUserRepository.findByEmail(email).orElseThrow(() -> new IllegalStateException("Email don't exist"));
+        costumerUser.setEnabled(true);
+        costumerUserRepository.save(costumerUser);
     }
 }

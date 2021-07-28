@@ -19,15 +19,22 @@ public class ProductService implements ServiceInterface<Product, ProductReposito
 
     @Override
     public void posPost(Product entity) {
+
     }
 
     @Override
     public void prePost(Product entity) {
+
     }
+
     @Override
     public void posPut(Product entity) {
+
     }
+
     @Override
     public void prePut(Product entity) {
+
     }
+
 }

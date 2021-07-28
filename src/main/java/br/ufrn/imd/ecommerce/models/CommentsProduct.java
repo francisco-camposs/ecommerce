@@ -15,8 +15,8 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = false)
 public class CommentsProduct extends AbstractEntity {
 
-    public static final String SNAKE_NAME = "coments_product";
-    public static final String CAMEL_NAME = "comentsProduct";
+    public static final String SNAKE_NAME = "comments_product";
+    public static final String CAMEL_NAME = "commentsProduct";
 
     public static final String GENERATOR_NAME = SNAKE_NAME + "_sequence";
     public static final String ID_COLUMN_NAME = SNAKE_NAME + "_id" ;
@@ -40,14 +40,10 @@ public class CommentsProduct extends AbstractEntity {
     private int starRate;
 
     @Column(nullable = false)
-    private String coment;
+    private String comment;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "product_ID")
+    @JoinColumn(name = Product.ID_COLUMN_NAME, nullable = false)
     private Product product;
 
-    @Override
-    public void setId() {
-
-    }
 }
