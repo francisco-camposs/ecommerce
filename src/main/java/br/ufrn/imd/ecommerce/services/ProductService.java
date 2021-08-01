@@ -3,6 +3,7 @@ package br.ufrn.imd.ecommerce.services;
 import br.ufrn.imd.ecommerce.interfaces.ServiceInterface;
 import br.ufrn.imd.ecommerce.models.Product;
 import br.ufrn.imd.ecommerce.repositories.ProductRepository;
+import br.ufrn.imd.ecommerce.validators.ProductValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class ProductService implements ServiceInterface<Product, ProductReposito
 
     @Override
     public void prePut(Product entity) {
+        validateProduct(entity);
     }
 
     private void validateProduct(Product entity) {
@@ -43,6 +45,7 @@ public class ProductService implements ServiceInterface<Product, ProductReposito
         if(!ProductValidator.isValidDescription(entity.getDescription())){
             errors = errors.concat(" Invalid description, Character limit reached or description shouldn't just numbers ");
         }
+
         if(!ProductValidator.isValidPrice(entity.getPrice())){
             errors = errors.concat(" Invalid price, Number of price is zero or negative ");
         }
@@ -50,7 +53,6 @@ public class ProductService implements ServiceInterface<Product, ProductReposito
         if ( !errors.isBlank() ){
 
         }
-
-
     }
+
 }

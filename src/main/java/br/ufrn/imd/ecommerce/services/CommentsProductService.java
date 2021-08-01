@@ -29,8 +29,10 @@ public class CommentsProductService implements ServiceInterface<CommentsProduct,
 
     @Override
     public void prePut(CommentsProduct entity) {
-
+        validateComments(entity);
     }
+
+
 
     public boolean checkProductIDIsValid(CommentsProduct entity){
         return getProductRepository().findById( entity.getProduct().getId()).isPresent();
@@ -43,9 +45,11 @@ public class CommentsProductService implements ServiceInterface<CommentsProduct,
         if(!CommentsProductValidator.isValidComment(entity.getComment())){
             errors = errors.concat(" Character limit reached ");
         }
+
         if(CommentsProductValidator.isBlankComment(entity.getComment())){
             errors = errors.concat(" Empty comment field ");
         }
+
         if(!checkProductIDIsValid(entity)){
             errors = errors.concat(" Product ID is invalid");
         }
