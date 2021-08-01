@@ -5,7 +5,9 @@ import br.ufrn.imd.ecommerce.dtos.RegistrationVendorRequest;
 import br.ufrn.imd.ecommerce.enums.UserRole;
 import br.ufrn.imd.ecommerce.models.CostumerUser;
 import br.ufrn.imd.ecommerce.models.ConfirmationToken;
+import br.ufrn.imd.ecommerce.models.VendorUser;
 import br.ufrn.imd.ecommerce.repositories.CostumerUserRepository;
+import br.ufrn.imd.ecommerce.repositories.VendorUserRepository;
 import br.ufrn.imd.ecommerce.validators.EmailValidator;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -20,8 +22,10 @@ import java.time.LocalDateTime;
 public class RegistrationService {
 
     private final AppUserService appUserService;
-    private final CostumerUserRepository costumerUserRepository;
     private final ConfirmationTokenService confirmationTokenService;
+
+    private final CostumerUserRepository costumerUserRepository;
+    private final VendorUserRepository vendorUserRepository;
 
     @Transactional
     public void confirmToken(String token) {
@@ -46,7 +50,7 @@ public class RegistrationService {
 
         this.validateCostumer(request);
 
-        return appUserService.signUpUser(new CostumerUser(
+        return appUserService.signUpCustomer(new CostumerUser(
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
@@ -58,8 +62,19 @@ public class RegistrationService {
 
         this.validateVendor(request);
 
-//        return appUserService.signUpUser(VendorUser.builder().userRole(UserRole.VENDOR).build());
-        return "";
+        return appUserService.signUpVendor(
+                VendorUser.builder().userRole(UserRole.VENDOR)
+                    .cnpj(request.getCnpj())
+                    .email(request.getEmail())
+                    .complement(request.getComplement())
+                    .imgLink(request.getImgLink())
+                    .number(request.getNumber())
+                    .postalCode(request.getPostalCode())
+                    .street(request.getStreet())
+                    .password(request.getPassword())
+                    .name(request.getName())
+                    .build());
+
     }
 
 
@@ -135,7 +150,7 @@ public class RegistrationService {
         if ( StringUtils.isAllBlank(password) )
             errors = errors.concat("The password can't be empty. \n");
 
-        if (password != null && (password.length() <= 8 || password.length() >= 25))
+        if (password != null && (password.length() < 8 || password.length() >= 25))
             errors = errors.concat("The password must be greater than 8 characters and less than 25 characters. \n");
 
         return errors;

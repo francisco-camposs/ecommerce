@@ -78,6 +78,10 @@ public class VendorUser implements UserDetails {
     @Column(length = 512)
     private String complement;
 
+    @Builder.Default
+    private Boolean expired = false;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -92,7 +96,7 @@ public class VendorUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return !expired;
     }
 
     @Override
@@ -102,7 +106,7 @@ public class VendorUser implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return !expired;
     }
 
     @Override

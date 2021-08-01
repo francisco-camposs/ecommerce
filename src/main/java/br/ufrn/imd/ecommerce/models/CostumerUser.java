@@ -56,7 +56,7 @@ public class CostumerUser implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserRole appUserRole;
+    private UserRole userRole;
 
     @Builder.Default
     private Boolean locked = false;
@@ -69,12 +69,13 @@ public class CostumerUser implements UserDetails {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.appUserRole = role;
+        this.userRole = role;
+        this.locked = false;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
         return Collections.singletonList(authority);
     }
 
