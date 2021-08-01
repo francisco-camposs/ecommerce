@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/products/comments")
 @AllArgsConstructor
-public class CommentsProductControllerSimple implements
+public class CommentsProductController implements
         ControllerSimpleInterface<CommentsProduct, CommentsProductRepository, CommentsProductService> {
 
     @Getter

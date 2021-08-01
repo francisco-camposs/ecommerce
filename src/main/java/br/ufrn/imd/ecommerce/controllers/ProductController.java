@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/products")
 @AllArgsConstructor
-public class ProductControllerSimple implements ControllerWriteProtectedInterface<Product, ProductRepository, ProductService> {
+public class ProductController implements ControllerWriteProtectedInterface<Product, ProductRepository, ProductService> {
 
     @Getter
     private final ProductService service;

@@ -32,7 +32,6 @@ public interface ServiceInterface <
         entity.setCreatedBy(user);
         entity.setCreatedAt(LocalDateTime.now());
         entity = this.getRepository().save(entity);
-        this.posPost(entity);
         return entity;
     }
 
@@ -47,15 +46,12 @@ public interface ServiceInterface <
         entity.setEditedBy(user);
         entity.setEditedAt(LocalDateTime.now());
         entity = this.getRepository().save(entity);
-        this.posPut(entity);
         return entity;
     }
 
     void prePost(E entity);
-    void posPost(E entity);
 
     void prePut(E entity);
-    void posPut(E entity);
 
 
 
