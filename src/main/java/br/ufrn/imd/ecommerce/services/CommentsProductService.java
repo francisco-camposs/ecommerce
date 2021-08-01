@@ -23,11 +23,6 @@ public class CommentsProductService implements ServiceInterface<CommentsProduct,
 
 
     @Override
-    public void posPost(CommentsProduct entity) {
-
-    }
-
-    @Override
     public void prePost(CommentsProduct entity) {
         if(entity == null){
             throw new IllegalStateException();
@@ -36,11 +31,6 @@ public class CommentsProductService implements ServiceInterface<CommentsProduct,
             if ( checkProductIDIsValid(entity) ){ }
             else
                 throw new IllegalStateException();
-    }
-
-    @Override
-    public void posPut(CommentsProduct entity) {
-
     }
 
     @Override

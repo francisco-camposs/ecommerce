@@ -54,7 +54,6 @@ public interface ServiceInterface <
     void prePut(E entity);
 
 
-
     default E findById(Long id){
         return this.getRepository().findById(id).orElseThrow(() -> new IllegalStateException("This id not exists"));
     }
