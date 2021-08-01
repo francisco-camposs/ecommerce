@@ -11,12 +11,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = ComentsProduct.SNAKE_NAME)
+@Table(name = CommentsProduct.SNAKE_NAME)
 @EqualsAndHashCode(callSuper = false)
-public class ComentsProduct extends AbstractEntity {
+public class CommentsProduct extends AbstractEntity {
 
-    public static final String SNAKE_NAME = "coments_product";
-    public static final String CAMEL_NAME = "comentsProduct";
+    public static final String SNAKE_NAME = "comments_product";
+    public static final String CAMEL_NAME = "commentsProduct";
 
     public static final String GENERATOR_NAME = SNAKE_NAME + "_sequence";
     public static final String ID_COLUMN_NAME = SNAKE_NAME + "_id" ;
@@ -24,15 +24,15 @@ public class ComentsProduct extends AbstractEntity {
 
     @Id
     @SequenceGenerator(
-            name = ComentsProduct.GENERATOR_NAME,
-            sequenceName = ComentsProduct.GENERATOR_NAME,
+            name = CommentsProduct.GENERATOR_NAME,
+            sequenceName = CommentsProduct.GENERATOR_NAME,
             allocationSize = 1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = ComentsProduct.GENERATOR_NAME
+            generator = CommentsProduct.GENERATOR_NAME
     )
 
-    @Column(name = ComentsProduct.ID_COLUMN_NAME, nullable = false, updatable = false)
+    @Column(name = CommentsProduct.ID_COLUMN_NAME, nullable = false, updatable = false)
     @Getter
     private Long id;
 
@@ -40,10 +40,10 @@ public class ComentsProduct extends AbstractEntity {
     private int starRate;
 
     @Column(nullable = false)
-    private String coment;
+    private String comment;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "product_ID")
+    @JoinColumn(nullable = false, name = "productID")
     private Product product;
 
     @Override

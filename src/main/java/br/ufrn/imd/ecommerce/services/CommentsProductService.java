@@ -1,8 +1,8 @@
 package br.ufrn.imd.ecommerce.services;
 
 import br.ufrn.imd.ecommerce.interfaces.ServiceInterface;
-import br.ufrn.imd.ecommerce.models.ComentsProduct;
-import br.ufrn.imd.ecommerce.repositories.ComentsProductRepository;
+import br.ufrn.imd.ecommerce.models.CommentsProduct;
+import br.ufrn.imd.ecommerce.repositories.CommentsProductRepository;
 import br.ufrn.imd.ecommerce.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ComentsProductService implements ServiceInterface<ComentsProduct, ComentsProductRepository> {
+public class CommentsProductService implements ServiceInterface<CommentsProduct, CommentsProductRepository> {
 
     @Getter
-    private final ComentsProductRepository repository;
+    private final CommentsProductRepository repository;
 
     @Getter
     private final AppUserService appUserService;
@@ -23,12 +23,12 @@ public class ComentsProductService implements ServiceInterface<ComentsProduct, C
 
 
     @Override
-    public void posPost(ComentsProduct entity) {
+    public void posPost(CommentsProduct entity) {
 
     }
 
     @Override
-    public void prePost(ComentsProduct entity) {
+    public void prePost(CommentsProduct entity) {
         if(entity == null){
             throw new IllegalStateException();
         }
@@ -39,16 +39,16 @@ public class ComentsProductService implements ServiceInterface<ComentsProduct, C
     }
 
     @Override
-    public void posPut(ComentsProduct entity) {
+    public void posPut(CommentsProduct entity) {
 
     }
 
     @Override
-    public void prePut(ComentsProduct entity) {
+    public void prePut(CommentsProduct entity) {
 
     }
 
-    public boolean checkProductIDIsValid(ComentsProduct entity){
+    public boolean checkProductIDIsValid(CommentsProduct entity){
         return getProductRepository().findById( entity.getProduct().getId()).isPresent();
     }
 
