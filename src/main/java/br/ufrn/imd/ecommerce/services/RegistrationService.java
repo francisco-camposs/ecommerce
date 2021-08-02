@@ -3,6 +3,9 @@ package br.ufrn.imd.ecommerce.services;
 import br.ufrn.imd.ecommerce.dtos.RegistrationClientRequest;
 import br.ufrn.imd.ecommerce.dtos.RegistrationVendorRequest;
 import br.ufrn.imd.ecommerce.enums.UserRole;
+import br.ufrn.imd.ecommerce.exception.ConfirmationTokenException;
+import br.ufrn.imd.ecommerce.exception.InvalidInputException;
+import br.ufrn.imd.ecommerce.exception.UnauthorizedAccessException;
 import br.ufrn.imd.ecommerce.models.CostumerUser;
 import br.ufrn.imd.ecommerce.models.ConfirmationToken;
 import br.ufrn.imd.ecommerce.models.VendorUser;
@@ -31,16 +34,16 @@ public class RegistrationService {
     public void confirmToken(String token) {
 
         ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token).orElseThrow(() ->
-            new IllegalStateException("Token not found")
+            new UnauthorizedAccessException("Token not found")
         );
 
         if (confirmationToken.getConfirmedAt() != null)
-            throw new IllegalStateException("Email already confirmed");
+            throw new ConfirmationTokenException("Email already confirmed");
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now()))
-            throw new IllegalStateException("Token already expired");
+            throw new UnauthorizedAccessException("Token already expired");
 
         confirmationTokenService.setConfirmedAt(confirmationToken);
         appUserService.enableAppUser(confirmationToken.getCostumerUser().getEmail());
@@ -116,7 +119,7 @@ public class RegistrationService {
             errors = errors.concat("CNPJ is too long. \n");
 
         if ( !errors.isBlank() )
-            throw new IllegalStateException(errors);
+            throw new InvalidInputException(errors);
 
     }
 
@@ -142,7 +145,7 @@ public class RegistrationService {
         errors = validatePassword(errors, request.getPassword());
 
         if ( !errors.isBlank() )
-            throw new IllegalStateException(errors);
+            throw new InvalidInputException(errors);
 
     }
 

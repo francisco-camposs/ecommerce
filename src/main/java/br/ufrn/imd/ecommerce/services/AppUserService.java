@@ -1,5 +1,6 @@
 package br.ufrn.imd.ecommerce.services;
 
+import br.ufrn.imd.ecommerce.exception.EmailConflictException;
 import br.ufrn.imd.ecommerce.models.CostumerUser;
 import br.ufrn.imd.ecommerce.models.ConfirmationToken;
 import br.ufrn.imd.ecommerce.models.VendorUser;
@@ -51,7 +52,7 @@ public class AppUserService implements UserDetailsService {
         boolean userExists = costumerUserRepository.findByEmail(costumerUser.getEmail()).isPresent() || vendorUserRepository.findByEmail(costumerUser.getEmail()).isPresent();
 
         if (userExists)
-            throw new IllegalStateException("Email already taken");
+            throw new EmailConflictException("Email already taken");
 
         String encodedPassword = bCryptPasswordEncoder.encode(costumerUser.getPassword());
         costumerUser.setPassword(encodedPassword);
@@ -76,7 +77,7 @@ public class AppUserService implements UserDetailsService {
         boolean userExists = costumerUserRepository.findByEmail(vendorUser.getEmail()).isPresent() || vendorUserRepository.findByEmail(vendorUser.getEmail()).isPresent();
 
         if (userExists)
-            throw new IllegalStateException("Email already taken");
+            throw new EmailConflictException("Email already taken");
 
         String encodedPassword = bCryptPasswordEncoder.encode(vendorUser.getPassword());
         vendorUser.setPassword(encodedPassword);
