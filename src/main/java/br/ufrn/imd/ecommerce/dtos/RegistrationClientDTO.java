@@ -1,15 +1,19 @@
 package br.ufrn.imd.ecommerce.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class RegistrationClientRequest {
+public class RegistrationClientDTO {
 
     private final String firstName;
 
@@ -18,5 +22,8 @@ public class RegistrationClientRequest {
     private final String email;
 
     private final String password;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private final LocalDate birthdate;
 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class Home {
 
+    @SuppressWarnings("SameReturnValue")
     @GetMapping
     public String home(){
         return "Hello user";

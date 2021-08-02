@@ -1,6 +1,7 @@
 package br.ufrn.imd.ecommerce.models;
 
 import br.ufrn.imd.ecommerce.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -64,12 +66,19 @@ public class CostumerUser implements UserDetails {
     @Builder.Default
     private Boolean enabled = true;
 
-    public CostumerUser(String firstName, String lastName, String email, String password, UserRole role) {
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = false)
+    private LocalDate birthdate;
+
+
+
+    public CostumerUser(String firstName, String lastName, String email, String password,LocalDate birthdate, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.userRole = role;
+        this.birthdate = birthdate;
         this.locked = false;
     }
 

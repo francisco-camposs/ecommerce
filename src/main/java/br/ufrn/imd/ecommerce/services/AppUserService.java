@@ -2,7 +2,6 @@ package br.ufrn.imd.ecommerce.services;
 
 import br.ufrn.imd.ecommerce.exception.EmailConflictException;
 import br.ufrn.imd.ecommerce.models.CostumerUser;
-import br.ufrn.imd.ecommerce.models.ConfirmationToken;
 import br.ufrn.imd.ecommerce.models.VendorUser;
 import br.ufrn.imd.ecommerce.repositories.CostumerUserRepository;
 import br.ufrn.imd.ecommerce.repositories.VendorUserRepository;
@@ -14,21 +13,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
+@SuppressWarnings("SameReturnValue")
 @Service
 @AllArgsConstructor
 public class AppUserService implements UserDetailsService {
-
-    private final String USER_NOT_FOUND_MSG = "User with email %s not found";
 
     private final CostumerUserRepository costumerUserRepository;
 
     private final VendorUserRepository vendorUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -41,6 +36,7 @@ public class AppUserService implements UserDetailsService {
         if (vendorUser.isPresent())
             return vendorUser.get();
 
+        String USER_NOT_FOUND_MSG = "User with email %s not found";
         throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email));
 
     }
@@ -49,7 +45,7 @@ public class AppUserService implements UserDetailsService {
     @Transactional
     public String signUpCustomer(CostumerUser costumerUser) {
 
-        boolean userExists = costumerUserRepository.findByEmail(costumerUser.getEmail()).isPresent() || vendorUserRepository.findByEmail(costumerUser.getEmail()).isPresent();
+        boolean userExists = this.existUser(costumerUser.getEmail());
 
         if (userExists)
             throw new EmailConflictException("Email already taken");
@@ -59,22 +55,13 @@ public class AppUserService implements UserDetailsService {
         costumerUser.setEnabled(true);
         costumerUserRepository.save(costumerUser);
 
-        String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                costumerUser
-        );
-
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
-        return token;
+        return "Success";
     }
 
     @Transactional
     public String signUpVendor(VendorUser vendorUser){
 
-        boolean userExists = costumerUserRepository.findByEmail(vendorUser.getEmail()).isPresent() || vendorUserRepository.findByEmail(vendorUser.getEmail()).isPresent();
+        boolean userExists = this.existUser(vendorUser.getEmail());
 
         if (userExists)
             throw new EmailConflictException("Email already taken");
@@ -84,8 +71,12 @@ public class AppUserService implements UserDetailsService {
         vendorUser.setEnabled(true);
         vendorUserRepository.save(vendorUser);
 
-        return "My body is ready";
+        return "Success";
 
+    }
+
+    private Boolean existUser(String email){
+        return costumerUserRepository.findByEmail(email).isPresent() || vendorUserRepository.findByEmail(email).isPresent();
     }
 
     public void enableAppUser(String email) {

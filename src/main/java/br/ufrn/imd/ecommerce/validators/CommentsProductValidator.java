@@ -8,10 +8,7 @@ public class CommentsProductValidator {
     public static final int MAX_CHARACTER_SIZE = 350;
 
     public static boolean isValidComment(String comment) {
-        if(comment.length() > MAX_CHARACTER_SIZE){
-            return false;
-        }
-        return true;
+        return comment.length() <= MAX_CHARACTER_SIZE;
     }
 
     public static boolean isBlankComment(String comment) {

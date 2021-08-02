@@ -4,7 +4,7 @@ package br.ufrn.imd.ecommerce.controllers;
 import br.ufrn.imd.ecommerce.interfaces.ControllerSimpleInterface;
 import br.ufrn.imd.ecommerce.models.CommentsProduct;
 import br.ufrn.imd.ecommerce.repositories.CommentsProductRepository;
-import br.ufrn.imd.ecommerce.services.CommentsProductService;
+import br.ufrn.imd.ecommerce.services.CommentsProductServiceVendor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/api/v1/products/comments")
 @AllArgsConstructor
 public class CommentsProductController implements
-        ControllerSimpleInterface<CommentsProduct, CommentsProductRepository, CommentsProductService> {
+        ControllerSimpleInterface<CommentsProduct, CommentsProductRepository, CommentsProductServiceVendor> {
 
     @Getter
-    private final CommentsProductService service;
+    private final CommentsProductServiceVendor service;
 
     @GetMapping("/search/{productId}")
     List<CommentsProduct> getCommentsByProduct(@PathVariable Long productId){

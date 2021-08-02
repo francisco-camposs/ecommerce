@@ -1,5 +1,6 @@
 package br.ufrn.imd.ecommerce.controllers;
 
+import br.ufrn.imd.ecommerce.interfaces.ControllerSimpleInterface;
 import br.ufrn.imd.ecommerce.interfaces.ControllerWriteProtectedInterface;
 import br.ufrn.imd.ecommerce.models.Product;
 import br.ufrn.imd.ecommerce.repositories.ProductRepository;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/products")
 @AllArgsConstructor
-public class ProductController implements ControllerWriteProtectedInterface<Product, ProductRepository, ProductService> {
+public class ProductController implements ControllerSimpleInterface<Product, ProductRepository, ProductService> {
 
     @Getter
     private final ProductService service;

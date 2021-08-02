@@ -8,34 +8,24 @@ public class ProductValidator {
 
     public static boolean isValidName(String name) {
        if (!hasJustNumbers(name)){
-           if(!(name.length() > MAX_NAME_SIZE) ){
-                return true;
-           }
+           return !(name.length() > MAX_NAME_SIZE);
        }
        return false;
     }
 
     public static boolean isValidDescription(String description) {
         if (!hasJustNumbers(description)){
-            if(!(description.length() > MAX_DESCRIPTION_SIZE) ){
-                return true;
-            }
+            return !(description.length() > MAX_DESCRIPTION_SIZE);
         }
         return false;
     }
 
     public static boolean isValidPrice(double price) {
-        if(price > 0){
-            return true;
-        }
-        return false;
+        return price > 0;
     }
 
     public static boolean isValidImgLink(String imgLink) {
-        if (!hasJustNumbers(imgLink)){
-            return true;
-        }
-        return false;
+        return !hasJustNumbers(imgLink);
     }
 
     public static boolean hasJustNumbers(String string) {

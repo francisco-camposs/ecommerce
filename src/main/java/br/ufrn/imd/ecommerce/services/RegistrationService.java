@@ -1,7 +1,7 @@
 package br.ufrn.imd.ecommerce.services;
 
-import br.ufrn.imd.ecommerce.dtos.RegistrationClientRequest;
-import br.ufrn.imd.ecommerce.dtos.RegistrationVendorRequest;
+import br.ufrn.imd.ecommerce.dtos.RegistrationClientDTO;
+import br.ufrn.imd.ecommerce.dtos.RegistrationVendorDTO;
 import br.ufrn.imd.ecommerce.enums.UserRole;
 import br.ufrn.imd.ecommerce.exception.ConfirmationTokenException;
 import br.ufrn.imd.ecommerce.exception.InvalidInputException;
@@ -49,7 +49,7 @@ public class RegistrationService {
         appUserService.enableAppUser(confirmationToken.getCostumerUser().getEmail());
     }
 
-    public String registerCostumer(RegistrationClientRequest request) {
+    public String registerCostumer(RegistrationClientDTO request) {
 
         this.validateCostumer(request);
 
@@ -58,10 +58,11 @@ public class RegistrationService {
                 request.getLastName(),
                 request.getEmail(),
                 request.getPassword(),
+                request.getBirthdate(),
                 UserRole.COSTUMER));
     }
 
-    public String registerVendor(RegistrationVendorRequest request) {
+    public String registerVendor(RegistrationVendorDTO request) {
 
         this.validateVendor(request);
 
@@ -82,7 +83,7 @@ public class RegistrationService {
 
 
 
-    private void validateVendor(RegistrationVendorRequest vendorRequest) {
+    private void validateVendor(RegistrationVendorDTO vendorRequest) {
 
         String errors = "";
 
@@ -123,7 +124,7 @@ public class RegistrationService {
 
     }
 
-    public void validateCostumer(RegistrationClientRequest request) {
+    public void validateCostumer(RegistrationClientDTO request) {
 
         String errors = "";
 

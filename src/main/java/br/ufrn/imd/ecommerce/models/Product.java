@@ -1,6 +1,6 @@
 package br.ufrn.imd.ecommerce.models;
 
-import br.ufrn.imd.ecommerce.abstracts.AbstractEntity;
+import br.ufrn.imd.ecommerce.abstracts.AbstractVendorEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = Product.SNAKE_NAME)
 @EqualsAndHashCode(callSuper = false)
-public class Product extends AbstractEntity {
+public class Product extends AbstractVendorEntity {
     public static final String SNAKE_NAME = "product";
     public static final String CAMEL_NAME = "product";
 

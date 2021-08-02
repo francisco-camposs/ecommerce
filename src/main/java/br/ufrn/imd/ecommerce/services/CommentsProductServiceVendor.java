@@ -8,12 +8,11 @@ import br.ufrn.imd.ecommerce.repositories.ProductRepository;
 import br.ufrn.imd.ecommerce.validators.CommentsProductValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CommentsProductService implements ServiceInterface<CommentsProduct, CommentsProductRepository> {
+public class CommentsProductServiceVendor implements ServiceInterface<CommentsProduct, CommentsProductRepository> {
 
     @Getter
     private final CommentsProductRepository repository;

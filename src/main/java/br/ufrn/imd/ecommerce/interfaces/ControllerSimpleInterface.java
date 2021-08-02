@@ -9,7 +9,7 @@ import java.util.List;
 public interface ControllerSimpleInterface <
         E extends AbstractEntity,
         R extends JpaRepository<E, Long>,
-        S extends ServiceInterface<E, R>>{
+        S extends ServiceInterface<E, R>> {
 
     S getService();
 

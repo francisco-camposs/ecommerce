@@ -1,6 +1,5 @@
 package br.ufrn.imd.ecommerce.dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode
-public class RegistrationVendorRequest {
+public class RegistrationVendorDTO {
 
     private final String name;
 
